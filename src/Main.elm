@@ -39,9 +39,12 @@ init =
 type Msg
     = CurrentTime Float
     | Loading
+    | Loaded
     | Playing
     | Paused
     | Seeking
+    | Stopped
+    | Ended
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -53,6 +56,9 @@ update msg model =
         Loading ->
             ( { model | videoState = "loading" }, Cmd.none )
 
+        Loaded ->
+            ( { model | videoState = "loaded" }, Cmd.none )
+
         Paused ->
             ( { model | videoState = "paused" }, Cmd.none )
 
@@ -61,6 +67,12 @@ update msg model =
 
         Seeking ->
             ( { model | videoState = "seeking" }, Cmd.none )
+
+        Stopped ->
+            ( { model | videoState = "stopped" }, Cmd.none )
+
+        Ended ->
+            ( { model | videoState = "ended" }, Cmd.none )
 
 
 
@@ -90,12 +102,12 @@ view model =
             , on "seek" (Json.map CurrentTime targetCurrentTime)
             , on "seek" (Json.succeed Seeking)
             , on "seeking" (Json.succeed Seeking)
-            , on "seekend" (Json.succeed Paused)
+            , on "seekend" (Json.succeed Ended)
             , on "playing" (Json.succeed Playing)
             , on "play" (Json.succeed Playing)
-            , on "pause" (Json.succeed Playing)
-            , on "ended" (Json.succeed Paused)
-            , on "loadedmetadata" (Json.succeed Paused)
+            , on "pause" (Json.succeed Paused)
+            , on "ended" (Json.succeed Ended)
+            , on "loadedmetadata" (Json.succeed Loaded)
             , controls True
             ]
             []

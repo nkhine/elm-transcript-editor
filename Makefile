@@ -19,5 +19,5 @@ clean:
 domain:
 	sls create_domain --stage ${stage} --region eu-west-2
 
-deploy: build strip
+deploy: clean build strip
 	sls deploy --stage ${stage} --region eu-west-2 --aws-profile ${profile} --verbose
