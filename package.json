@@ -1,0 +1,13 @@
+{
+  "name": "elm-transcript-editor",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {},
+  "author": "Norman Khine <norman@khine.net> (https://www.khine.net/)",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-domain-manager": "^2.6.5",
+    "serverless-s3-sync": "^1.7.0"
+  }
+}
