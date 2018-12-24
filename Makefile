@@ -15,6 +15,8 @@ strip:
 clean:
 	rm -rf ./bin/status build
 
+live:
+	elm-live src/Main.elm --open
 
 domain:
 	sls create_domain --stage ${stage} --region eu-west-2
