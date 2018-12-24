@@ -11,7 +11,8 @@ import Html
 
 
 type Page
-    = InputPage
+    = DisplayPage
+    | InputPage
 
 
 type Msg
@@ -59,8 +60,14 @@ subscriptions model =
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        _ ->
+        ChangePlanText s ->
+            ( { model | currPlanText = s }, Cmd.none )
+
+        NoOp ->
             ( model, Cmd.none )
+
+        SubmitPlan ->
+            ( { model | currPage = DisplayPage }, Cmd.none )
 
 
 inputPage : Model -> Element Msg
@@ -103,12 +110,26 @@ inputPage model =
         ]
 
 
+displayPage : Model -> Element Msg
+displayPage model =
+    column [] [ text model.currPlanText ]
+
+
 
 ---- VIEW ----
 
 
 view : Model -> Browser.Document Msg
 view model =
+    let
+        content =
+            case model.currPage of
+                DisplayPage ->
+                    displayPage model
+
+                InputPage ->
+                    inputPage model
+    in
     { title = "Elm transcription editor"
     , body =
         [ layout [] <|
